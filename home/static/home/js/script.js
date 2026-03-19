@@ -162,17 +162,17 @@ async function atualizarFiltros() {
 
         // ==== Cards de resumo ====
         document.getElementById('summary-total-municipios').textContent =
-            `${data.summaryCards.totalMunicipios.toLocaleString('pt-BR')} (${data.summaryCards.percTotalMunicipios.toFixed(1)}%)`;
+            `${data.summaryCards.totalMunicipios.toLocaleString('pt-BR')} (${data.summaryCards.percTotalMunicipios.toFixed(1).replace('.', ',')}%)`;
 
         document.getElementById('summary-media-receita').textContent =
             data.summaryCards.mediaReceitaPerCapita.toLocaleString(
                 'pt-BR',
-                { style: 'currency', currency: 'BRL' }
+                { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }
             );
 
         const diffNational = data.summaryCards.diffMediaNacional; 
         const diffValueEl = document.getElementById('summary-diff-nacional');
-        diffValueEl.textContent = `${diffNational.toFixed(1)}%`;
+        diffValueEl.textContent = `${diffNational.toFixed(1).replace('.', ',')}%`;
 
         const diffTrendElement = document.getElementById('summary-diff-nacional-trend');
         diffTrendElement.textContent = diffNational > 0
@@ -182,7 +182,7 @@ async function atualizarFiltros() {
             `sub-value ${diffNational < 0 ? 'negative' : ''} ${diffNational > 0 ? 'positive' : ''}`;
 
         applyDiffColor(diffNational);
-        document.getElementById('summary-gini').textContent = data.summaryCards.giniIndex;
+        document.getElementById('summary-gini').textContent = data.summaryCards.giniIndex.toFixed(1).replace('.', ',');
 
         // ==== Gráfico ====
         populacaoQuintilChart.data.labels = data.chartData.labels;
